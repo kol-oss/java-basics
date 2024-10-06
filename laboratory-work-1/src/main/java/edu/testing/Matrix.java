@@ -92,7 +92,7 @@ public class Matrix {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                result.set(i, j, a.get(i, j));
+                result.set(i, j, a.get(i, j) + b.get(i, j));
             }
         }
 
