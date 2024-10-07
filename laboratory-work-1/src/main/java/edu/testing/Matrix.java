@@ -8,10 +8,7 @@ public class Matrix {
     private final float[][] values;
 
     public Matrix(int size) {
-        this.rows = size;
-        this.cols = size;
-
-        values = new float[rows][cols];
+        this(size, size);
     }
 
     public Matrix(int rows, int cols) {
