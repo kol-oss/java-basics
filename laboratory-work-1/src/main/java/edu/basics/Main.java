@@ -1,4 +1,4 @@
-package edu.testing;
+package edu.basics;
 
 // Number = 27
 // C5 = 2
@@ -56,10 +56,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        System.out.println("===== RUN WITH DEFINED VALUES =====");
         runWithDefinedValues();
 
         System.out.println("---------------");
 
+        System.out.println("===== RUN WITH RANDOM VALUES =====");
         runWithRandomValues();
     }
 }

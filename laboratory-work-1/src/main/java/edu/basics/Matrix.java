@@ -1,4 +1,4 @@
-package edu.testing;
+package edu.basics;
 
 import java.util.Random;
 
@@ -53,20 +53,6 @@ public class Matrix {
         }
 
         return values[index];
-    }
-
-    public float[] getColumn(int index) {
-        if (index < 0 || index >= this.cols) {
-            throw new IndexOutOfBoundsException("Column index is out of bounds");
-        }
-
-        float[] column = new float[this.cols];
-
-        for (int j = 0; j < this.rows; j++) {
-            column[j] = values[j][index];
-        }
-
-        return column;
     }
 
     public void set(int row, int col, float value) {
