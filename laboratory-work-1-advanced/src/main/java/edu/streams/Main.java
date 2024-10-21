@@ -30,8 +30,8 @@ import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Main {
-    private static final int SKIP = 1;
-    private static final int LIMIT = 100;
+    private static final int SKIP = 15;
+    private static final int LIMIT = 500;
 
     public static void main(String[] args) {
         // Skip predicate: if creature is demon
