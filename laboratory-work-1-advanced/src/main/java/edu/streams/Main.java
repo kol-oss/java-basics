@@ -14,20 +14,23 @@ package edu.streams;
 * Field D: сила атаки
 */
 
+import edu.streams.collector.CreatureCollector;
 import edu.streams.creature.Creature;
 import edu.streams.creature.CreatureFactory;
 import edu.streams.creature.CreatureTypeEnum;
 import edu.streams.gatherers.LimitGatherer;
 import edu.streams.gatherers.SkipGatherer;
+import edu.streams.handler.CreatureHandler;
+import edu.streams.output.CreatureMapOutput;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
-    private static final int SKIP = 10;
+    private static final int SKIP = 1;
     private static final int LIMIT = 100;
 
     public static void main(String[] args) {
@@ -43,12 +46,29 @@ public class Main {
                     return difference >= 0 && difference < date.getYear();
                 };
 
-        HashMap<CreatureTypeEnum, Creature> grouped = (HashMap<CreatureTypeEnum, Creature>) Stream.generate(CreatureFactory::generate)
+        HashMap<CreatureTypeEnum, ArrayList<Creature>> grouped = (HashMap<CreatureTypeEnum, ArrayList<Creature>>) Stream.generate(CreatureFactory::generate)
+                .filter(filterSelector)
                 .gather(new SkipGatherer<>(SKIP, skipSelector))
                 .gather(new LimitGatherer(LIMIT))
-                .filter(filterSelector)
-                .collect(Collectors.groupingBy(Creature::getType));
+                .collect(new CreatureCollector());
 
-        System.out.println(grouped);
+        System.out.println(CreatureMapOutput.creaturesToString(grouped));
+
+        CreatureHandler handler = new CreatureHandler(grouped);
+
+        System.out.println(STR."Total creatures: \{LIMIT}");
+
+        Creature maxPowerCreature = handler.getMaxPowerCreature();
+        System.out.println(STR."Max power is: \{maxPowerCreature.getPower()} [\{maxPowerCreature.getType()}]");
+
+        Creature minPowerCreature = handler.getMinPowerCreature();
+        System.out.println(STR."Min power is: \{minPowerCreature.getPower()} [\{minPowerCreature.getType()}]");
+
+        System.out.println(STR."Average power: \{handler.getAveragePower()}");
+        System.out.println(STR."Standart deviation: \{handler.getStandardDeviation()}");
+
+        System.out.println(STR."Interquartile range: \{handler.getInterquartileRange()}");
+
+        System.out.println(CreatureMapOutput.statsToString(handler.getOutliers()));
     }
 }

@@ -25,8 +25,8 @@ public class LimitGatherer<T> implements Gatherer<T, AtomicInteger, T> {
     public Integrator<AtomicInteger, T, T> integrator() {
         return Integrator.of((state, item, downstream) -> {
             if (state.get() < limit) {
-                state.incrementAndGet();
                 downstream.push(item);
+                state.incrementAndGet();
                 return true;
             }
 
