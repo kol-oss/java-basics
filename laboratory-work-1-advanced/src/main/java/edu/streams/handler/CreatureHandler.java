@@ -78,7 +78,7 @@ public class CreatureHandler {
                 .mapToDouble(Creature::getPower);
     }
 
-    private double getQuartile(boolean isFirst) {
+    public double getQuartile(boolean isFirst) {
         DoubleStream sorted = this.getDoubleStream();
         long length = this.getCreaturesListLength();
         double median = this.findMedian(sorted, length);

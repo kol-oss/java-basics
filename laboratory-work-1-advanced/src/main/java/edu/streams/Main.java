@@ -69,6 +69,15 @@ public class Main {
 
         System.out.println(STR."Interquartile range: \{handler.getInterquartileRange()}");
 
+        final double firstQuartile = handler.getQuartile(true);
+        final double thirdQuartile = handler.getQuartile(false);
+
+        System.out.println(STR."First quartile: \{firstQuartile}");
+        System.out.println(STR."Third quartile: \{thirdQuartile}");
+
+        System.out.println(STR."Min outlier range: \{firstQuartile - 1.5 * (thirdQuartile - firstQuartile)}");
+        System.out.println(STR."Max outlier range: \{thirdQuartile + 1.5 * (thirdQuartile - firstQuartile)}");
+
         System.out.println(CreatureMapOutput.statsToString(handler.getOutliers()));
     }
 }
