@@ -1,14 +1,17 @@
 # Laboratory work 1 (Advanced)
 
+**Author:** Khozhajinov Mykola, IM-21
+
 ## Variant
 
 **Topic:** Mystical creatures (C3)
+
+This project is a data generation and analysis system for simulating information on mystical creatures—mythical or supernatural beings. It features an infinite stream generator that produces realistic data entries with attributes such as creature type, attack power, and historical first mention. The data is then refined through customized filtering and grouping processes, allowing for in-depth statistical analysis. This includes calculating key metrics like minimum, maximum, and average attack power, along with standard deviation.
 
 ## Environment
 
 To work with this project, you need this tools installed on your machine:
 * Java 22+
-* Maven
 
 ## Usage
 
