@@ -2,9 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.kpi</groupId>
-  <artifactId>laboratory-work-2-advanceed</artifactId>
+  <artifactId>laboratory-work-2-advanced</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Archetype - laboratory-work-2-advanceed</name>
+  <name>Archetype - laboratory-work-2-advanced</name>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
@@ -14,6 +14,14 @@
         <configuration>
           <source>16</source>
           <target>16</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
+        <configuration>
+          <mainClass>edu.kpi.reflection.Main</mainClass>
         </configuration>
       </plugin>
     </plugins>
