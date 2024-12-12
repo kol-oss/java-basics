@@ -1,9 +1,15 @@
 package edu.kpi.reflection.builder;
 
-public class EntityBuilder {
-    public static Entity build(Object object) {
-        SQLGenerator generator = new SQLGenerator(object);
+import edu.kpi.reflection.generator.SQLGenerator;
 
+public class EntityBuilder {
+    private final SQLGenerator generator;
+
+    public EntityBuilder(SQLGenerator generator) {
+        this.generator = generator;
+    }
+
+    public Entity build() {
         return new Entity() {
             @Override
             public String insert() {

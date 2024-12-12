@@ -1,4 +1,4 @@
-package edu.kpi.reflection.builder;
+package edu.kpi.reflection.generator;
 
 import edu.kpi.reflection.annotations.Column;
 import edu.kpi.reflection.annotations.Table;
@@ -9,14 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SQLGenerator {
-    private static final String NULL_LITERAL = "NULL";
-    private static final String STRING_LITERAL = "'";
-
+public class ReflectionGenerator implements SQLGenerator {
     private final Object object;
     private final String tableName;
 
-    public SQLGenerator(Object object) {
+    public ReflectionGenerator(Object object) {
         Class<?> reflected = object.getClass();
 
         if (!object.getClass().isAnnotationPresent(Table.class)) {
