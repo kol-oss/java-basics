@@ -48,7 +48,7 @@ public class Main {
         record.sum = 99;
 
         long recordExecTime = benchmark(new ReflectionGenerator(record));
-        System.out.println("Category (with Reflection): " + recordExecTime + " ms");
+        System.out.println("Record (with Reflection): " + recordExecTime + " ms");
 
         // Example 4: Usage of Account no-reflection entity
         Account account = new Account(1, 10);
@@ -59,6 +59,7 @@ public class Main {
         // Example 5: Usage of generated repositories
         UserSQLRepository userRepository = new UserSQLRepository(user);
 
+        System.out.println("Generated User repository:");
         System.out.println(userRepository.insert());
         System.out.println(userRepository.select());
         System.out.println(userRepository.update());
