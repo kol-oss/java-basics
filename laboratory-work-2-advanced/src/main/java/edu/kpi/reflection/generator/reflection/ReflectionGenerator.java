@@ -1,7 +1,8 @@
-package edu.kpi.reflection.generator;
+package edu.kpi.reflection.generator.reflection;
 
 import edu.kpi.reflection.annotations.Column;
 import edu.kpi.reflection.annotations.Table;
+import edu.kpi.reflection.generator.SQLGenerator;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReflectionGenerator implements SQLGenerator {
+public class ReflectionGenerator extends SQLGenerator {
     private final Object object;
     private final String tableName;
 
@@ -38,16 +39,6 @@ public class ReflectionGenerator implements SQLGenerator {
         return name.isEmpty() ? field.getName().toLowerCase() : name;
     }
 
-    private String convertToString(Object object) {
-        if (object == null) {
-            return NULL_LITERAL;
-        }
-        if (object instanceof String) {
-            return STRING_LITERAL + object.toString() + STRING_LITERAL;
-        }
-        return object.toString();
-    }
-
     private void checkNullable(Field field, Object value) {
         Column column = field.getAnnotation(Column.class);
 
@@ -71,7 +62,7 @@ public class ReflectionGenerator implements SQLGenerator {
                 Object fieldValue = field.get(object);
                 this.checkNullable(field, fieldValue);
 
-                values.put(columnName, fieldValue == null ? NULL_LITERAL : this.convertToString(fieldValue));
+                values.put(columnName, fieldValue == null ? NULL_LITERAL : this.getSerializedValue(fieldValue));
             } catch (IllegalAccessException exception) {
                 throw new RuntimeException(exception);
             }
@@ -110,7 +101,7 @@ public class ReflectionGenerator implements SQLGenerator {
 
         String selectQuery = String.format("SELECT %s FROM %s", String.join(", ", columns), this.tableName);
         if (uniqueColumnName != null && uniqueColumnValue != null) {
-            selectQuery += String.format(" WHERE %s = %s", uniqueColumnName, this.convertToString(uniqueColumnValue));
+            selectQuery += String.format(" WHERE %s = %s", uniqueColumnName, this.getSerializedValue(uniqueColumnValue));
         }
 
         return selectQuery;
@@ -143,14 +134,14 @@ public class ReflectionGenerator implements SQLGenerator {
                 if (column.nullable() && fieldValue == null) {
                     setValues.put(columnName, NULL_LITERAL);
                 } else {
-                    setValues.put(columnName, this.convertToString(fieldValue));
+                    setValues.put(columnName, this.getSerializedValue(fieldValue));
                 }
 
                 if (column.unique()) {
                     if (uniqueColumnName == null) {
                         uniqueColumnName = columnName;
                     }
-                    uniqueColumnValue = convertToString(fieldValue);
+                    uniqueColumnValue = getSerializedValue(fieldValue);
                 }
 
             } catch (IllegalAccessException exception) {
@@ -199,6 +190,6 @@ public class ReflectionGenerator implements SQLGenerator {
             throw new IllegalArgumentException("At least one unique field is missing or incorrectly annotated");
         }
 
-        return String.format("DELETE FROM %s WHERE %s = %s;", this.tableName, uniqueColumnName, this.convertToString(uniqueColumnValue));
+        return String.format("DELETE FROM %s WHERE %s = %s;", this.tableName, uniqueColumnName, this.getSerializedValue(uniqueColumnValue));
     }
 }

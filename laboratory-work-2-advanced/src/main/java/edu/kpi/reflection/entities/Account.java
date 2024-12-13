@@ -1,25 +1,39 @@
 package edu.kpi.reflection.entities;
 
-import java.util.List;
+import edu.kpi.reflection.generator.inheritance.SQLSerializable;
 
-public class Account {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Account extends SQLSerializable {
     private final int id;
     private final int balance;
+    private final String bankName = "MONO";
 
     public Account(int id, int balance) {
         this.id = id;
         this.balance = balance;
     }
 
-    public int getId() {
-        return this.id;
+    @Override
+    public String getTableName() {
+        return "accounts";
     }
 
-    public int getBalance() {
-        return this.balance;
+    @Override
+    public Map<String, Object> getUniqueField() {
+        HashMap<String, Object> keyFields = new HashMap<>();
+        keyFields.put("id", this.id);
+
+        return keyFields;
     }
 
-    public List<String> getFields() {
-        return List.of("id", "balance");
+    @Override
+    public Map<String, Object> getFieldsAndValues() {
+        HashMap<String, Object> fieldsAndValues = new HashMap<>();
+        fieldsAndValues.put("balance", this.balance);
+        fieldsAndValues.put("bankName", this.bankName);
+
+        return fieldsAndValues;
     }
 }

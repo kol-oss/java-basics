@@ -39,25 +39,25 @@ INSERT INTO users (user_id, age, username) VALUES (1, 10, 'Antony');
 SELECT user_id, username, age FROM users WHERE user_id = 1
 UPDATE users SET user_id = 1, age = 10 WHERE user_id = 1;
 DELETE FROM users WHERE user_id = 1;
-User with Reflection: 80
+User (with Reflection): 31 ms
 
 INSERT INTO categories (category_id, name) VALUES (0, 'Sport');
 SELECT category_id, name FROM categories WHERE category_id = 0
 UPDATE categories SET category_id = 0, name = 'Sport' WHERE category_id = 0;
 DELETE FROM categories WHERE category_id = 0;
-Category with Reflection: 5
+Category (with Reflection): 0 ms
 
 INSERT INTO records (record_id, name, sum) VALUES (99, 'Gym rent', 99);
 SELECT record_id, name, sum FROM records WHERE record_id = 99
 UPDATE records SET record_id = 99, name = 'Gym rent' WHERE record_id = 99;
 DELETE FROM records WHERE record_id = 99;
-Record with Reflection: 4
+Category (with Reflection): 0 ms
 
-INSERT INTO accounts (id, balance) VALUES (1, 10)
+INSERT INTO accounts (id, balance, bankName) VALUES (1, 10, 'MONO')
 SELECT * FROM accounts WHERE id = 1
-UPDATE accounts SET balance = 10 WHERE id = 1
+UPDATE accounts SET balance = 10, bankName = 'MONO' WHERE id = 1
 DELETE FROM accounts WHERE id = 1
-Account without Reflection: 30
+Account (with Inheritance): 16 ms
 ```
 
 This output demonstrates the SQL queries generated for CRUD operations, as well as the performance difference between implementations with and without reflection.

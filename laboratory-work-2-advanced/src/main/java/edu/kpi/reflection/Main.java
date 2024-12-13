@@ -6,42 +6,39 @@ import edu.kpi.reflection.entities.Account;
 import edu.kpi.reflection.entities.Category;
 import edu.kpi.reflection.entities.Record;
 import edu.kpi.reflection.entities.User;
-import edu.kpi.reflection.generator.NoReflectionGenerator;
-import edu.kpi.reflection.generator.ReflectionGenerator;
+import edu.kpi.reflection.generator.SQLGenerator;
+import edu.kpi.reflection.generator.inheritance.InheritanceGenerator;
+import edu.kpi.reflection.generator.reflection.ReflectionGenerator;
 
 public class Main {
-    public static void main(String[] args) {
-        long startTime;
+    private static long benchmark(SQLGenerator generator) {
+        long startTime = System.currentTimeMillis();
 
+        Entity entity = new EntityBuilder(generator).build();
+        System.out.println(entity.insert());
+        System.out.println(entity.select());
+        System.out.println(entity.update());
+        System.out.println(entity.delete());
+
+        return System.currentTimeMillis() - startTime;
+    }
+
+    public static void main(String[] args) {
         // Example 1: Usage of User entity
         User user = new User();
         user.id = 1;
         user.name = "Antony";
         user.age = 10;
 
-        startTime = System.currentTimeMillis();
-
-        Entity userEntity = new EntityBuilder(new ReflectionGenerator(user)).build();
-        System.out.println(userEntity.insert());
-        System.out.println(userEntity.select());
-        System.out.println(userEntity.update());
-        System.out.println(userEntity.delete());
-
-        System.out.println("User with Reflection: " + (System.currentTimeMillis() - startTime));
+        long userExecTime = benchmark(new ReflectionGenerator(user));
+        System.out.println("User (with Reflection): " + userExecTime + " ms");
 
         // Example 2: Usage of Category entity
         Category category = new Category();
         category.name = "Sport";
 
-        startTime = System.currentTimeMillis();
-
-        Entity categoryEntity = new EntityBuilder(new ReflectionGenerator(category)).build();
-        System.out.println(categoryEntity.insert());
-        System.out.println(categoryEntity.select());
-        System.out.println(categoryEntity.update());
-        System.out.println(categoryEntity.delete());
-
-        System.out.println("Category with Reflection: " + (System.currentTimeMillis() - startTime));
+        long categoryExecTime = benchmark(new ReflectionGenerator(category));
+        System.out.println("Category (with Reflection): " + categoryExecTime + " ms");
 
         // Example 3: Usage of Record entity
         Record record = new Record();
@@ -49,27 +46,13 @@ public class Main {
         record.name = "Gym rent";
         record.sum = 99;
 
-        startTime = System.currentTimeMillis();
-
-        Entity recordEntity = new EntityBuilder(new ReflectionGenerator(record)).build();
-        System.out.println(recordEntity.insert());
-        System.out.println(recordEntity.select());
-        System.out.println(recordEntity.update());
-        System.out.println(recordEntity.delete());
-
-        System.out.println("Record with Reflection: " + (System.currentTimeMillis() - startTime));
+        long recordExecTime = benchmark(new ReflectionGenerator(record));
+        System.out.println("Category (with Reflection): " + recordExecTime + " ms");
 
         // Example 4: Usage of Account no-reflection entity
         Account account = new Account(1, 10);
 
-        startTime = System.currentTimeMillis();
-
-        Entity accountEntity = new EntityBuilder(new NoReflectionGenerator(account)).build();
-        System.out.println(accountEntity.insert());
-        System.out.println(accountEntity.select());
-        System.out.println(accountEntity.update());
-        System.out.println(accountEntity.delete());
-
-        System.out.println("Account without Reflection: " + (System.currentTimeMillis() - startTime));
+        long accountExecTime = benchmark(new InheritanceGenerator(account));
+        System.out.println("Account (with Inheritance): " + accountExecTime + " ms");
     }
 }
