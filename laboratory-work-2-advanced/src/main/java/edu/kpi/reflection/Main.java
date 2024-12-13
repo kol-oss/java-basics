@@ -2,10 +2,10 @@ package edu.kpi.reflection;
 
 import edu.kpi.reflection.builder.Entity;
 import edu.kpi.reflection.builder.EntityBuilder;
-import edu.kpi.reflection.example.Account;
-import edu.kpi.reflection.example.Category;
-import edu.kpi.reflection.example.Record;
-import edu.kpi.reflection.example.User;
+import edu.kpi.reflection.entities.Account;
+import edu.kpi.reflection.entities.Category;
+import edu.kpi.reflection.entities.Record;
+import edu.kpi.reflection.entities.User;
 import edu.kpi.reflection.generator.NoReflectionGenerator;
 import edu.kpi.reflection.generator.ReflectionGenerator;
 

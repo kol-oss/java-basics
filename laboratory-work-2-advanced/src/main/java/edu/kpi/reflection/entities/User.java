@@ -1,4 +1,4 @@
-package edu.kpi.reflection.example;
+package edu.kpi.reflection.entities;
 
 import edu.kpi.reflection.annotations.Column;
 import edu.kpi.reflection.annotations.Table;

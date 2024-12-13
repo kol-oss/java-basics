@@ -1,4 +1,4 @@
-package edu.kpi.reflection.example;
+package edu.kpi.reflection.entities;
 
 import java.util.List;
 

@@ -1,13 +1,16 @@
-package edu.kpi.reflection.example;
+package edu.kpi.reflection.entities;
 
 import edu.kpi.reflection.annotations.Column;
 import edu.kpi.reflection.annotations.Table;
 
-@Table(name = "categories")
-public class Category {
-    @Column(name = "category_id", unique = true)
+@Table
+public class Record {
+    @Column(name = "record_id", unique = true)
     public int id;
 
     @Column(nullable = false)
     public String name;
+
+    @Column(updatable = false)
+    public int sum;
 }

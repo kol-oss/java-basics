@@ -1,6 +1,6 @@
 package edu.kpi.reflection.generator;
 
-import edu.kpi.reflection.example.Account;
+import edu.kpi.reflection.entities.Account;
 
 public class NoReflectionGenerator implements SQLGenerator {
     private final Account object;
