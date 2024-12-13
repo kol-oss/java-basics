@@ -6,6 +6,7 @@ import edu.kpi.reflection.entities.Account;
 import edu.kpi.reflection.entities.Category;
 import edu.kpi.reflection.entities.Record;
 import edu.kpi.reflection.entities.User;
+import edu.kpi.reflection.example.UserSQLRepository;
 import edu.kpi.reflection.generator.SQLGenerator;
 import edu.kpi.reflection.generator.inheritance.InheritanceGenerator;
 import edu.kpi.reflection.generator.reflection.ReflectionGenerator;
@@ -54,5 +55,13 @@ public class Main {
 
         long accountExecTime = benchmark(new InheritanceGenerator(account));
         System.out.println("Account (with Inheritance): " + accountExecTime + " ms");
+
+        // Example 5: Usage of generated repositories
+        UserSQLRepository userRepository = new UserSQLRepository(user);
+
+        System.out.println(userRepository.insert());
+        System.out.println(userRepository.select());
+        System.out.println(userRepository.update());
+        System.out.println(userRepository.delete());
     }
 }
